@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = ".;myprotodata";
+
+message request {
+    string action = 1;
+    repeated string payload = 2;
+}
+
+message response {
+    string error = 1;
+    repeated string payload = 2;
+}
+
+
+service SorterMessageService {
+    rpc GetRequest(request) returns (response);
+}

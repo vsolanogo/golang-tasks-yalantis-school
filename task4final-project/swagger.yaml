@@ -1,0 +1,544 @@
+swagger: "2.0"
+info:
+  description: "Trello like app"
+  version: "1.0.0"
+  title: "Trello like app"
+  termsOfService: ""
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "project"
+  description: ""
+- name: "column"
+  description: ""
+- name: "task"
+  description: ""
+- name: "comment"
+  description: ""
+schemes:
+- "https"
+paths:
+  /apitrello/project:
+    post:
+      tags: 
+      - "project"
+      description: ""
+      operationId: "addProject"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New project description and name"
+        required: true
+        schema:
+          $ref: "#/definitions/projectInit"
+      responses:
+        "200":
+          description: "Created project"
+          schema:
+            $ref: "#/definitions/projectResult"
+    get: 
+      tags: 
+      - "project"
+      operationId: "getProject"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses: 
+        "200":
+          description: "All projects"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/projectResult"
+    put:
+      tags: 
+      - "project"
+      description: ""
+      operationId: "putProject"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New project description and name"
+        required: true
+        schema:
+          $ref: "#/definitions/projectResult"
+      responses:
+        "200":
+          description: "Created project"
+          schema:
+            $ref: "#/definitions/projectResult"
+  /apitrello/project/{id}:
+    get:
+      tags: 
+      - "project"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of project to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/projectDetailed"
+    delete:
+      tags: 
+      - "project"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of pet to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          
+
+           
+  /apitrello/comment/{id}:
+    get:
+      tags: 
+      - "comment"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Created project"
+          schema:
+            $ref: "#/definitions/comment"
+    delete:
+      tags:
+      - "comment"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Deleted project"
+  /apitrello/comment:
+    post:
+      tags:
+      - "comment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/commentCreate"
+      responses:
+        "200":
+          description: "Created comment"
+          schema:
+            $ref: "#/definitions/comment"
+            
+  /apitrello/task/{id}:
+    get:
+      tags: 
+      - "task"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of task to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/task"
+    delete:
+      tags:
+      - "task"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of task to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Deleted project"
+  
+  /apitrello/task:
+    post:
+      tags:
+      - "task"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New task"
+        required: true
+        schema:
+          $ref: "#/definitions/taskCreate"
+      responses:
+        "200":
+          description: "Created project"
+          schema:
+            $ref: "#/definitions/task"
+  /apitrello/newposition:
+    post:
+      tags:
+      - "task"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New task position in current or new column"
+        required: true
+        schema:
+          $ref: "#/definitions/taskUpdatePosition"
+      responses:
+        "200":
+          description: "Success"
+
+  /apitrello/column:
+    post:
+      tags: 
+      - "column"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New column name and projectid"
+        required: true
+        schema:
+          $ref: "#/definitions/projectColumnInsert"
+      responses:
+        "200":
+          description: "Created project"
+          schema:
+            $ref: "#/definitions/projectColumnResult"
+            
+  /apitrello/column/newposition:
+    post:
+      tags: 
+      - "column"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New column name and projectid"
+        required: true
+        schema:
+          $ref: "#/definitions/projectColumnPositionUpd"
+      responses:
+        "200":
+          description: "Created project"
+            
+  /apitrello/column{id}:
+    get:
+      tags: 
+      - "column"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of column to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/projectcolumnGet"
+    delete:
+      tags:
+      - "column"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of column to delete. Child tasks will be moved to left column"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Deleted project"
+
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+    
+definitions:
+  projectColumnInsert:
+    type: "object"
+    properties:
+      projectid:
+        type: "integer"
+      name:
+        type: "string"
+        
+  projectColumnPositionUpd:
+    type: "object"
+    required:
+    - "projectcolumnid"
+    - "position"
+    properties:
+      projectcolumnid:
+        type: "integer"
+      position: 
+        type: "integer"
+
+        
+  projectColumnResult:
+    type: "object"
+    properties:
+      projectcolumnid:
+        type: "integer"
+      projectid:
+        type: "integer"
+      name:
+        type: "string"
+      position: 
+        type: "integer"
+
+  projectResult: 
+    type: "object"
+    properties:
+      projectid:
+        type: "integer"
+      name:
+        type: "string"
+      description:
+        type: "string"
+        
+  projectDetailed: 
+    type: "object"
+    properties:
+      projectid:
+        type: "integer"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      projectColumns:
+        type: "array"
+        items:
+          $ref: "#/definitions/projectcolumnWithoutTask"
+  
+  projectInit: 
+    type: "object"
+    required: 
+    - "name"
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+        
+  project: 
+    type: "object"
+    properties:
+      projectid:
+        type: "integer"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      projectcolumns:
+        type: "array"
+        items:
+          $ref: "#/definitions/projectcolumn"
+          
+  projectcolumnGet:
+    type: "object"
+    properties:
+      projectcolumnid: 
+        type: "integer"
+      projectid: 
+        type: "integer"
+      name: 
+        type: "string"
+      position:
+        type: "integer"
+      task:
+        type: "array"
+        items:
+          $ref: "#/definitions/taskWithoutComments"
+          
+          
+  projectcolumn: 
+    type: "object"
+    properties:
+      projectcolumnid: 
+        type: "integer"
+      projectid: 
+        type: "integer"
+      name: 
+        type: "string"
+      position:
+        type: "integer"
+      task:
+        type: "array"
+        items:
+          $ref: "#/definitions/task"
+          
+  projectcolumnWithoutTask: 
+    type: "object"
+    properties:
+      projectcolumnid: 
+        type: "integer"
+      projectid: 
+        type: "integer"
+      name: 
+        type: "string"
+      position:
+        type: "integer"
+        
+  taskWithoutComments: 
+    type: "object"
+    properties:
+      taskid:
+        type: "integer"
+      projectcolumnid:
+        type: "integer"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      position:
+        type: "integer"
+        
+  task: 
+    type: "object"
+    properties:
+      taskid:
+        type: "integer"
+      projectcolumnid:
+        type: "integer"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      position:
+        type: "integer"
+      comments:
+        type: "array"
+        items:
+          $ref: "#/definitions/comment"
+          
+  taskCreate: 
+    type: "object"
+    required:
+    - "projectcolumnid"
+    - "name"
+    - "position"
+    properties:
+      projectcolumnid: 
+        type: "integer"
+      name:
+        type: "string"
+      position: 
+        type: "integer"
+        
+  taskUpdatePosition: 
+    type: "object"
+    required:
+    - "taskid"
+    - "position"
+    properties:
+      projectcolumnid: 
+        type: "integer"
+      taskid:
+        type: "integer"
+      position: 
+        type: "integer"
+    
+  comment:
+    type: "object"
+    properties:
+      commentid:
+        type: "integer"
+      taskid:
+        type: "integer"
+      text:
+        type: "string"
+      createdat:
+        type: "string"
+      updatedat:
+        type: "string"
+        
+  commentCreate:
+    type: "object"
+    required: 
+    - "taskid"
+    - "text"
+    properties:
+      taskid:
+        type: "integer"
+      text:
+        type: "string" 
+        
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
