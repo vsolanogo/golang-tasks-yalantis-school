@@ -1,4 +1,4 @@
-# Yalantis Golang School
+
 # Task Management Application
 
 ## Brief explanation
